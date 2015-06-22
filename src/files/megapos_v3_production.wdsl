@@ -1,0 +1,358 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="Megapos3" targetNamespace="http://v3.ws.megapos.si/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://v3.ws.megapos.si/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://v3.ws.megapos.si/" xmlns:tns="http://v3.ws.megapos.si/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="gateway" type="tns:gateway"/>
+  <xs:element name="state" type="tns:transaction-state"/>
+  <xs:element name="transaction" type="tns:transaction"/>
+  <xs:complexType name="id-data">
+    <xs:sequence>
+      <xs:element name="store-id" type="xs:string"/>
+      <xs:element name="transaction-id" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="amount-data">
+    <xs:complexContent>
+      <xs:extension base="tns:id-data">
+        <xs:sequence>
+          <xs:element name="amount" type="xs:decimal"/>
+          <xs:element default="EUR" minOccurs="0" name="currency" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="init-data">
+    <xs:complexContent>
+      <xs:extension base="tns:amount-data">
+        <xs:sequence>
+          <xs:element name="status-url" type="xs:string"/>
+          <xs:element name="update-url" type="xs:string"/>
+          <xs:element default="SLV" minOccurs="0" name="language" type="tns:language"/>
+          <xs:element name="gateway-id" type="xs:string"/>
+          <xs:element name="transaction-type" type="tns:transaction-type"/>
+          <xs:element minOccurs="0" name="customer-name" type="xs:string"/>
+          <xs:element minOccurs="0" name="customer-surname" type="xs:string"/>
+          <xs:element minOccurs="0" name="additional-info" type="xs:string"/>
+          <xs:element minOccurs="0" name="email" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="authorization-data">
+    <xs:complexContent>
+      <xs:extension base="tns:init-data">
+        <xs:sequence>
+          <xs:element name="pan" type="xs:string"/>
+          <xs:element name="cvc" type="xs:string"/>
+          <xs:element name="expiry-date-year" type="xs:int"/>
+          <xs:element name="expiry-date-month" type="xs:int"/>
+          <xs:element default="1" minOccurs="0" name="installments" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="transaction">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="internal-id" type="xs:string"/>
+      <xs:element minOccurs="0" name="transaction-id" type="xs:string"/>
+      <xs:element minOccurs="0" name="store-id" type="xs:string"/>
+      <xs:element minOccurs="0" name="auth-id" type="xs:string"/>
+      <xs:element minOccurs="0" name="reference-id" type="xs:string"/>
+      <xs:element minOccurs="0" name="payment-gateway" type="tns:gateway"/>
+      <xs:element minOccurs="0" name="payment-instrument" type="tns:payment-instrument"/>
+      <xs:element minOccurs="0" name="card-type" type="tns:card-type"/>
+      <xs:element minOccurs="0" name="transaction-type" type="tns:transaction-type"/>
+      <xs:element minOccurs="0" name="customer-name" type="xs:string"/>
+      <xs:element minOccurs="0" name="customer-surname" type="xs:string"/>
+      <xs:element minOccurs="0" name="additional-info" type="xs:string"/>
+      <xs:element minOccurs="0" name="modified-date" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="create-date" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="amount" type="xs:double"/>
+      <xs:element minOccurs="0" name="currency" type="xs:string"/>
+      <xs:element default="1" name="installments" type="xs:int"/>
+      <xs:element minOccurs="0" name="payment-id" type="xs:string"/>
+      <xs:element minOccurs="0" name="payment-transaction-id" type="xs:string"/>
+      <xs:element minOccurs="0" name="payment-reference-id" type="xs:string"/>
+      <xs:element minOccurs="0" name="gateway-result" type="xs:string"/>
+      <xs:element minOccurs="0" name="email" type="xs:string"/>
+      <xs:element minOccurs="0" name="active-state" type="tns:transaction-state"/>
+      <xs:element minOccurs="0" name="states">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="state" type="tns:transaction-state"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="gateway">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="xs:string"/>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+      <xs:element minOccurs="0" name="description" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="card-type" type="tns:card-type"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="instrument" type="tns:payment-instrument"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="language" type="tns:language"/>
+      <xs:element name="realtime" type="xs:boolean"/>
+      <xs:element name="supports-order-cancel" type="xs:boolean"/>
+      <xs:element name="supports-order" type="xs:boolean"/>
+      <xs:element name="supports-purchase-cancel" type="xs:boolean"/>
+      <xs:element name="supports-purchase" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="type" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="transaction-state">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="type" type="tns:state-type"/>
+      <xs:element minOccurs="0" name="timestamp" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="amount" type="xs:decimal"/>
+      <xs:element minOccurs="0" name="currency" type="xs:string"/>
+      <xs:element minOccurs="0" name="result" type="xs:string"/>
+      <xs:element minOccurs="0" name="result-Type" type="tns:result-type"/>
+      <xs:element minOccurs="0" name="response-message" type="xs:string"/>
+      <xs:element minOccurs="0" name="response-code" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="language">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="SLV"/>
+      <xs:enumeration value="ENG"/>
+      <xs:enumeration value="ITA"/>
+      <xs:enumeration value="FRA"/>
+      <xs:enumeration value="GER"/>
+      <xs:enumeration value="SPA"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="transaction-type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ORDER"/>
+      <xs:enumeration value="PURCHASE"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="card-type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="AMEX"/>
+      <xs:enumeration value="DINERS"/>
+      <xs:enumeration value="MAESTRO"/>
+      <xs:enumeration value="VISA"/>
+      <xs:enumeration value="MASTERCARD"/>
+      <xs:enumeration value="KARANTA"/>
+      <xs:enumeration value="ACTIVA"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="payment-instrument">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="MONETA"/>
+      <xs:enumeration value="ABANET"/>
+      <xs:enumeration value="KLIK"/>
+      <xs:enumeration value="CREDIT_CARD"/>
+      <xs:enumeration value="VPAS"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="state-type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="INITIALIZING"/>
+      <xs:enumeration value="INITIALIZED"/>
+      <xs:enumeration value="AWAITING-CONFIRMATION"/>
+      <xs:enumeration value="FAILED"/>
+      <xs:enumeration value="PROCESSED"/>
+      <xs:enumeration value="CANCELLED"/>
+      <xs:enumeration value="ABORTED"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="result-type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="REDIRECT"/>
+      <xs:enumeration value="NONE"/>
+      <xs:enumeration value="INFO"/>
+      <xs:enumeration value="ERROR"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType final="#all" name="gatewayArray">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="item" nillable="true" type="tns:gateway"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MegaposException" type="tns:megapos-exception"/>
+  <xs:complexType name="megapos-exception">
+    <xs:sequence/>
+  </xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="initResponse">
+    <wsdl:part name="return" type="tns:transaction">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="init">
+    <wsdl:part name="init-data" type="tns:init-data">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listGateways">
+    <wsdl:part name="storeId" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MegaposException">
+    <wsdl:part element="tns:MegaposException" name="MegaposException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="loadResponse">
+    <wsdl:part name="return" type="tns:transaction">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listGatewaysResponse">
+    <wsdl:part name="gateway" type="tns:gatewayArray">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cancelTransactionResponse">
+    <wsdl:part name="return" type="tns:transaction">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="load">
+    <wsdl:part name="id-data" type="tns:id-data">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cancelTransaction">
+    <wsdl:part name="id-data" type="tns:id-data">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="processTransaction">
+    <wsdl:part name="process-data" type="tns:amount-data">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="authorize">
+    <wsdl:part name="authorization-data" type="tns:authorization-data">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="authorizeResponse">
+    <wsdl:part name="return" type="tns:transaction">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="processTransactionResponse">
+    <wsdl:part name="return" type="tns:transaction">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="Megapos3Service">
+    <wsdl:operation name="authorize">
+      <wsdl:input message="tns:authorize" name="authorize">
+    </wsdl:input>
+      <wsdl:output message="tns:authorizeResponse" name="authorizeResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:MegaposException" name="MegaposException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="cancelTransaction">
+      <wsdl:input message="tns:cancelTransaction" name="cancelTransaction">
+    </wsdl:input>
+      <wsdl:output message="tns:cancelTransactionResponse" name="cancelTransactionResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:MegaposException" name="MegaposException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="listGateways">
+      <wsdl:input message="tns:listGateways" name="listGateways">
+    </wsdl:input>
+      <wsdl:output message="tns:listGatewaysResponse" name="listGatewaysResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="processTransaction">
+      <wsdl:input message="tns:processTransaction" name="processTransaction">
+    </wsdl:input>
+      <wsdl:output message="tns:processTransactionResponse" name="processTransactionResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:MegaposException" name="MegaposException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="init">
+      <wsdl:input message="tns:init" name="init">
+    </wsdl:input>
+      <wsdl:output message="tns:initResponse" name="initResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:MegaposException" name="MegaposException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="load">
+      <wsdl:input message="tns:load" name="load">
+    </wsdl:input>
+      <wsdl:output message="tns:loadResponse" name="loadResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:MegaposException" name="MegaposException">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="Megapos3SoapBinding" type="tns:Megapos3Service">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="authorize">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="authorize">
+        <soap:body namespace="http://v3.ws.megapos.si/" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="authorizeResponse">
+        <soap:body namespace="http://v3.ws.megapos.si/" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="MegaposException">
+        <soap:fault name="MegaposException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="cancelTransaction">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="cancelTransaction">
+        <soap:body namespace="http://v3.ws.megapos.si/" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cancelTransactionResponse">
+        <soap:body namespace="http://v3.ws.megapos.si/" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="MegaposException">
+        <soap:fault name="MegaposException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="listGateways">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="listGateways">
+        <soap:body namespace="http://v3.ws.megapos.si/" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="listGatewaysResponse">
+        <soap:body namespace="http://v3.ws.megapos.si/" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="processTransaction">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="processTransaction">
+        <soap:body namespace="http://v3.ws.megapos.si/" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="processTransactionResponse">
+        <soap:body namespace="http://v3.ws.megapos.si/" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="MegaposException">
+        <soap:fault name="MegaposException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="init">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="init">
+        <soap:body namespace="http://v3.ws.megapos.si/" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="initResponse">
+        <soap:body namespace="http://v3.ws.megapos.si/" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="MegaposException">
+        <soap:fault name="MegaposException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="load">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="load">
+        <soap:body namespace="http://v3.ws.megapos.si/" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="loadResponse">
+        <soap:body namespace="http://v3.ws.megapos.si/" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="MegaposException">
+        <soap:fault name="MegaposException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Megapos3">
+    <wsdl:port binding="tns:Megapos3SoapBinding" name="Megapos3ServicePort">
+      <soap:address location="https://service.megapos.si/services/v3/bare"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

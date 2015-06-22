@@ -1,0 +1,38 @@
+{
+    "name": "datastat/megapos",
+    "description": "EON MegaPOS for laravel 5",
+    "keywords": ["laravel 5", "megapos" ],
+    "homepage": "https://github.com/datastat/megapos",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mitja Robic",
+            "email": "mitja.robic@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php" : ">=5.3.0",
+        "laravelcollective/html": "5.1.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit" : "4.*",
+        "scrutinizer/ocular": "~1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Datastat\\MegaPOS\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Datastat\\MegaPOS\\Test\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+
+    "minimum-stability": "dev"
+
+}

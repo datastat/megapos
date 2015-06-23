@@ -23,6 +23,7 @@ class MegaPOSService
         'gateway' => array( 'required', 'in:ACTIVA_PGW,BANKART_PGW,DINERS,EFUNDS,MONETA,KLIK,ABANET'),
         'tx_type' => array( 'sometimes|required', 'in:PURCHASE,ORDER'),
         'amount' => array( 'required', 'numeric'),
+        'order_id' => array('required', 'numeric'),
     );
 
     public function __construct(IlluminateValidator $validator)
@@ -265,7 +266,7 @@ class MegaPOSService
     {
         $idData = array(
             'store-id'=> $this->storeId,
-            'transaction-id'=>"txid-".rand(),
+            'transaction-id'=>$params['order_id'],
         );
 
         $amountData = array(

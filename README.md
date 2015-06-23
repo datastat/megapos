@@ -44,11 +44,19 @@ routes visible for testing [enable_test_routes = true in megapos.php config]
 | GET|HEAD  | megapos/list-gateways | megapos.list     | Closure 
 ```
 
-and now, the api...
+from IOC...
 
 ```
 $megapos = App::make('megapos');
 ```
+
+facade...
+
+```
+\MegaPOS
+```
+
+and now, the api...
 
 ```
 $megapos->init($params);

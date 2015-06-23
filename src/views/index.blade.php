@@ -48,6 +48,8 @@
     {!! Form::text('amount','1.11')!!}
 </div>
 
+<br/>
+
 <div>
     {!! Form::label('order_id', 'order id')!!}
     {!! Form::text('order_id', 1234)!!}

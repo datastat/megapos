@@ -266,7 +266,7 @@ class MegaPOSService
     {
         $idData = array(
             'store-id'=> $this->storeId,
-            'transaction-id'=>$params['order_id'],
+            'transaction-id'=>"txid-".$params['order_id'],
         );
 
         $amountData = array(
@@ -286,8 +286,9 @@ class MegaPOSService
         $initData['customer-name'] = $params['name'];
         $initData['customer-surname'] = $params['surname'];
         $initData['email'] = $params['email'];
+        $initData['additional-info'] = ['order-id' => $params['order_id']];
         if (isset($params['additional_info'])){
-            $initData['additional-info'] = $params['additional_info'];
+            $initData['additional-info'] = array_merge($initData['additional-info'], $params['additional_info']);
         }
 
         return array_merge($idData, $amountData, $initData);

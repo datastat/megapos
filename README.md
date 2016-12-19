@@ -1,4 +1,4 @@
-# EON MegaPOS
+# EON MegaPOS Branch
 
 add to providers in app.php ...
 ```

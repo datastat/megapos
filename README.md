@@ -1,4 +1,4 @@
-# EON MegaPOS
+# EON MegaPOS Test
 
 add to providers in app.php ...
 ```
